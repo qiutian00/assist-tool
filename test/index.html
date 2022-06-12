@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>无障碍demo</title>
+  <script type="text/javascript" src="./assist.js"></script>
+  <style>
+    .container {
+      text-align: center;
+      position: relative;
+      padding: 10px 0;
+    }
+    .container > .btn {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 2;
+      padding: 10px 5px;
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+
+    }
+    .center-show {
+      display: flex;
+      justify-content: center;
+    }
+
+    .contentContainer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 12px;
+      /* border: 1px solid #bbb; */
+    }
+
+    .contentContainer > div {
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .introduce {
+      margin: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id='assist-open' class="btn">开启无障碍</div>
+  </div>
+
+  <div class="center-show introduce">
+    语音合成是通过机械的、电子的方法产生人造语音的技术。TTS技术（又称文语转换技术）隶属于语音合成，它是将计算机自己产生的、或外部输入的文字信息转变为可以听得懂的、流利的汉语口语输出的技术。
+  </div>
+
+  <div class="contentContainer">
+    <div class="center-show">
+      <div>
+        <di><h3>知识的海洋</h3></di>
+        <div><a href="https://github.com/">阅读更多</a></div>
+        <div><img alt="书籍图片" src="https://qiutian00blog.oss-cn-shenzhen.aliyuncs.com/uPic/books-and-little-bird-kestutis-kasparavicius.jpg" /></div>
+      </div>
+    </div>
+    <div class="center-show">
+      <div>
+        <div><h3 title='无障碍role标注中水墨一天'>水墨一天</h3></div>
+        <div role="a" href="https://app.netlify.com/">查看更多</div>
+        <div><img alt="demo-icon" src="https://qiutian00blog.oss-cn-shenzhen.aliyuncs.com/uPic/wash-away-abstract-art-by-linda-woods-linda-woods.jpg" /></div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const assist = new Assist({
+      "namespace": "mozi-assist",
+      "domain": "",  
+      "url": "https://nls-gateway.cn-shanghai.aliyuncs.com/stream/v1/tts",
+      "audioOptions": {
+        "token": "715eec80b27b4bb4b702c452c2973ebd",
+        "appkey": "7hpuiEv908bpd6Hv",
+        "format": "mp3", // pcm/wav/mp3
+        "sample_rate": "1600", // 1600 or 800
+        "speech_rate": "0", // -500~500
+      }
+    })
+    console.log('自定义assist:', assist)
+
+    ~(function(){
+      assist.message.subscribe('openState', function (state) {
+        console.log('是否开启无障碍模式：', state);
+      })
+    })()
+
+    ~(function(){
+      assist.message.subscribe('zoomState', function (state) {
+        console.log('页面放大倍数：', state);
+      })
+    })()
+  </script>
+</body>
+
+</html>
